@@ -80,9 +80,24 @@ export default merge(baseConfig, {
         include: /\.module\.s?(c|a)ss$/,
       },
       {
-        test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-        exclude: /\.module\.s?(c|a)ss$/,
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('tailwindcss'), require('autoprefixer')],
+              },
+            },
+          },
+        ],
       },
       // Fonts
       {

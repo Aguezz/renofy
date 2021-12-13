@@ -10,37 +10,16 @@
  */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import path from 'path';
-import {
-  app,
-  BrowserWindow,
-  shell,
-  ipcMain,
-  Notification,
-  nativeImage,
-} from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
-import express from 'express';
+
 import bodyParser from 'body-parser';
+import { app, BrowserWindow, nativeImage, Notification, shell } from 'electron';
+import express from 'express';
+import path from 'path';
+
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
-
 let mainWindow: BrowserWindow | null = null;
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -70,10 +49,10 @@ const installExtensions = async () => {
 const createServer = async () => {
   const expressApp = express();
 
-  expressApp.use(bodyParser.json());
+  expressApp.use(bodyParser.json({ limit: '50mb' }));
+  expressApp.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
   expressApp.post('/send', (req, res) => {
     type NotificationBody = { title: string; text: string; icon: string };
-
     const { title, text, icon } = req.body as NotificationBody;
 
     new Notification({
@@ -83,7 +62,6 @@ const createServer = async () => {
     }).show();
     return res.status(200).send({});
   });
-
   expressApp.listen(8082, () => console.log('Server is running on port 8082'));
 };
 
@@ -102,8 +80,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 540,
+    height: 720,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -135,10 +113,6 @@ const createWindow = async () => {
     event.preventDefault();
     shell.openExternal(url);
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 };
 
 /**

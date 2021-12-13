@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  position: relative;
+  height: 100vh;
+  font-family: sans-serif;
+  overflow-y: hidden;
+}

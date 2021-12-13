@@ -10,9 +10,15 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.14",
+    "axios": "^0.24.0",
     "react": "17.0.2",
     "react-native": "0.66.3",
-    "react-native-android-notification-listener": "^4.0.1"
+    "react-native-android-notification-listener": "^4.0.1",
+    "react-native-elements": "^3.4.2",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-vector-icons": "^9.0.0",
+    "zustand": "^3.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
