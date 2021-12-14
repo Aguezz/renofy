@@ -7,4 +7,5 @@ body {
   height: 100vh;
   font-family: sans-serif;
   overflow-y: hidden;
+  overflow-x: auto;
 }
