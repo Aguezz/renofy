@@ -1,3 +1,4 @@
+import '@fontsource/open-sans';
 import './global.css';
 
 import { render } from 'react-dom';

@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+
 import { clsx } from '../utils/clsx';
 
 type ButtonType = 'button' | 'submit' | 'reset';
@@ -6,6 +8,7 @@ type ButtonColor = 'primary' | 'secondary' | 'error';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps {
+  to?: string;
   type?: ButtonType;
   variant?: ButtonVariant;
   color?: ButtonColor;
@@ -38,34 +41,39 @@ const variantColorClasses: {
 
 const sizeClasses: { [S in ButtonSize]: string } = {
   sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-md',
-  lg: 'px-5 py-3 text-lg2',
+  md: 'px-5 py-2 text-md',
+  lg: 'px-6 py-3 text-lg',
 };
 
 export const Button: React.FC<
   ButtonProps & React.HTMLAttributes<HTMLButtonElement>
 > = ({
+  to = null,
   type = 'submit',
   variant = 'text',
   color = 'primary',
   size = 'md',
   block = false,
   className = '',
+  onClick = () => {},
   children,
   ...props
 }) => {
+  const navigate = useNavigate();
+
   return (
     <button
       // eslint-disable-next-line react/button-has-type
-      type={type}
+      type={to !== null ? type : 'button'}
       className={clsx(
-        'rounded-lg font-semibold transition-colors duration-150',
+        'rounded-lg font-semibold transition-colors duration-150 tracking-wide',
         variantColorClasses[variant][color],
         sizeClasses[size],
         block && 'block w-full',
         className
       )}
       {...props}
+      onClick={to !== null ? () => navigate(to) : onClick}
     >
       {children}
     </button>

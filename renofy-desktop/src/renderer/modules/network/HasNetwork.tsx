@@ -12,14 +12,19 @@ const NetworkErrorMessage = () => {
       <div className="flex flex-col items-center justify-center text-center h-screen">
         <FontAwesomeIcon icon={faWifi} className="text-6xl text-gray-400" />
         <Typography size="2xl" className="mt-6">
-          Cannot Connect to Local Network
+          Cannot Connect to a Local Network
         </Typography>
         <Typography className="mt-2">
           To run this application, connect this desktop to the same wifi as your
           smartphone
         </Typography>
-        <Button type="button" variant="contained" size="lg" className="mt-10">
-          REFRESH
+        <Button
+          type="button"
+          variant="contained"
+          color="error"
+          className="mt-10"
+        >
+          Try Again
         </Button>
       </div>
     </Container>
@@ -27,7 +32,7 @@ const NetworkErrorMessage = () => {
 };
 
 export const HasNetwork: React.FC = ({ children }) => {
-  const [hasNetwork] = useState(false);
+  const [hasNetwork] = useState(true);
 
   return <>{hasNetwork ? children : <NetworkErrorMessage />}</>;
 };
