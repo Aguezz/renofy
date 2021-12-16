@@ -4,7 +4,7 @@ export const Navbar = () => {
   return (
     <div>
       <Link to="/">QRCode</Link>
-      <Link to="/setting">Settings</Link>
+      <Link to="/settings">Settings</Link>
     </div>
   );
 };

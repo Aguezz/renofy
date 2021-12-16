@@ -11,7 +11,7 @@ interface InputProps {
 
 export const Input: React.FC<
   InputProps & React.HTMLProps<HTMLInputElement>
-> = ({ name, label, error, className, ...props }) => {
+> = ({ name, label, error, className, required, ...props }) => {
   const id = useMemo(() => uuidv4(), []);
 
   return (
@@ -19,6 +19,7 @@ export const Input: React.FC<
       {label && (
         <label className="block mb-1" htmlFor={id}>
           {label}
+          {required && <span className="text-red-500">*</span>}
         </label>
       )}
       <input
@@ -28,6 +29,7 @@ export const Input: React.FC<
           'w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline',
           className
         )}
+        required={required}
         {...props}
       />
       {!!error && <span className="text-xs text-gray-600">{error}</span>}

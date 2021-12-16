@@ -1,6 +1,6 @@
 import { DashboardPage } from './modules/dashboard';
-import { LandingPage } from './modules/landing';
-import { SettingPage } from './modules/setting';
+import { QRCodePage } from './modules/qr-code';
+import { SettingsPage } from './modules/settings';
 
 interface Route {
   path: string;
@@ -8,7 +8,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/', component: LandingPage },
+  { path: '/', component: QRCodePage },
   { path: '/dashboard', component: DashboardPage },
-  { path: '/setting', component: SettingPage },
+  { path: '/settings', component: SettingsPage },
 ];

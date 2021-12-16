@@ -5,7 +5,7 @@ import { Input } from '../../shared-components/Input';
 import { Typography } from '../../shared-components/Typography';
 import { HasNetwork } from '../network';
 
-export const LandingPage = () => {
+export const QRCodePage = () => {
   return (
     <HasNetwork>
       <div className="flex items-center justify-center h-screen">

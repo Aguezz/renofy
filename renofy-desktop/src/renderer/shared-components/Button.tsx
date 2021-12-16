@@ -21,7 +21,7 @@ const variantColorClasses: {
 } = {
   contained: {
     primary: 'text-white bg-blue-500 hover:bg-blue-600',
-    secondary: 'text-white bg-gray-500 hover:bg-gray-600',
+    secondary: 'text-black bg-gray-300 hover:bg-gray-400',
     error: 'text-white bg-red-500 hover:bg-red-600',
   },
   outlined: {
@@ -33,7 +33,7 @@ const variantColorClasses: {
       'text-red-600 border border-red-600 focus:shadow-outline hover:bg-red-100 hover:text-red-700',
   },
   text: {
-    primary: 'text-blue-600 hover:bg-blue-100 hover:text-blue-700',
+    primary: 'text-blue-500 hover:bg-blue-100 hover:text-blue-600',
     secondary: 'text-gray-700 hover:bg-gray-200 hover:text-gray-800',
     error: 'text-red-600 hover:bg-red-100 hover:text-red-700',
   },
@@ -41,7 +41,7 @@ const variantColorClasses: {
 
 const sizeClasses: { [S in ButtonSize]: string } = {
   sm: 'px-3 py-1.5 text-sm',
-  md: 'px-5 py-2 text-md',
+  md: 'px-5 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
 };
 
