@@ -35,7 +35,9 @@ export const Select: React.FC<
           {...props}
         >
           {options.map((option) => (
-            <option value={option.value}>{option.text}</option>
+            <option key={option.value} value={option.value}>
+              {option.text}
+            </option>
           ))}
         </select>
         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">

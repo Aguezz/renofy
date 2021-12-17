@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 body {
-  position: relative;
-  height: 100vh;
   font-family: "Open Sans";
-  overflow-y: hidden;
-  overflow-x: auto;
+
+  @apply relative h-screen overflow-y-auto overflow-x-hidden;
 }

@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { clsx } from '../utils/clsx';
 
 interface InputProps {
-  name?: string;
   label?: string;
   error?: string;
 }

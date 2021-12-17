@@ -240,10 +240,13 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@fontsource/open-sans": "^4.5.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
+    "@mui/material": "^5.2.4",
     "@tailwindcss/typography": "^0.5.0",
     "body-parser": "^1.19.0",
     "electron-debug": "^3.2.0",

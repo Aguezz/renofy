@@ -1,23 +1,25 @@
+import React from 'react';
 import { useNavigate } from 'react-router';
 
 import { clsx } from '../utils/clsx';
 
-type ButtonType = 'button' | 'submit' | 'reset';
-type ButtonVariant = 'text' | 'contained' | 'outlined';
-type ButtonColor = 'primary' | 'secondary' | 'error';
-type ButtonSize = 'sm' | 'md' | 'lg';
-
 interface ButtonProps {
   to?: string;
-  type?: ButtonType;
-  variant?: ButtonVariant;
-  color?: ButtonColor;
-  size?: ButtonSize;
+  type?: 'button' | 'submit' | 'reset';
+  variant?: 'text' | 'contained' | 'outlined';
+  color?: 'primary' | 'secondary' | 'error';
+  size?: 'sm' | 'md' | 'lg';
   block?: boolean;
 }
 
+type ButtonVariant = ButtonProps['variant'];
+type ButtonColor = ButtonProps['color'];
+type ButtonSize = ButtonProps['size'];
+
 const variantColorClasses: {
-  [V in ButtonVariant]: { [C in ButtonColor]: string };
+  [V in Exclude<ButtonVariant, undefined>]: {
+    [C in Exclude<ButtonColor, undefined>]: string;
+  };
 } = {
   contained: {
     primary: 'text-white bg-blue-500 hover:bg-blue-600',
@@ -39,43 +41,59 @@ const variantColorClasses: {
   },
 };
 
-const sizeClasses: { [S in ButtonSize]: string } = {
+const sizeClasses: { [S in Exclude<ButtonSize, undefined>]: string } = {
   sm: 'px-3 py-1.5 text-sm',
   md: 'px-5 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
 };
 
-export const Button: React.FC<
-  ButtonProps & React.HTMLAttributes<HTMLButtonElement>
-> = ({
-  to = null,
-  type = 'submit',
-  variant = 'text',
-  color = 'primary',
-  size = 'md',
-  block = false,
-  className = '',
-  onClick = () => {},
-  children,
-  ...props
-}) => {
-  const navigate = useNavigate();
+export const Button = React.forwardRef<
+  HTMLButtonElement,
+  Omit<React.HTMLProps<HTMLButtonElement>, keyof ButtonProps> & ButtonProps
+>(
+  (
+    {
+      to,
+      type,
+      variant,
+      color,
+      size,
+      block,
+      className,
+      onClick,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const navigate = useNavigate();
 
-  return (
-    <button
-      // eslint-disable-next-line react/button-has-type
-      type={to !== null ? type : 'button'}
-      className={clsx(
-        'rounded-lg font-semibold transition-colors duration-150 tracking-wide',
-        variantColorClasses[variant][color],
-        sizeClasses[size],
-        block && 'block w-full',
-        className
-      )}
-      {...props}
-      onClick={to !== null ? () => navigate(to) : onClick}
-    >
-      {children}
-    </button>
-  );
+    return (
+      <button
+        ref={ref}
+        // eslint-disable-next-line react/button-has-type
+        type={to !== null ? type || 'submit' : 'button'}
+        className={clsx(
+          'rounded-lg font-semibold transition-colors duration-150 tracking-wide',
+          variantColorClasses[variant || 'text'][color || 'primary'],
+          sizeClasses[size || 'md'],
+          block && 'block w-full',
+          className
+        )}
+        {...props}
+        onClick={to ? () => navigate(to) : onClick}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+Button.defaultProps = {
+  to: undefined,
+  type: 'submit',
+  variant: 'text',
+  color: 'primary',
+  size: 'md',
+  block: false,
 };

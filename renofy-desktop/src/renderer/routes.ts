@@ -1,4 +1,5 @@
 import { DashboardPage } from './modules/dashboard';
+import { DevicePage } from './modules/device/DevicePage';
 import { QRCodePage } from './modules/qr-code';
 import { SettingsPage } from './modules/settings';
 
@@ -8,7 +9,8 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/', component: QRCodePage },
+  { path: '/qr-code', component: QRCodePage },
   { path: '/dashboard', component: DashboardPage },
+  { path: '/devices', component: DevicePage },
   { path: '/settings', component: SettingsPage },
 ];
