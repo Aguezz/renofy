@@ -1,7 +1,7 @@
 import QRCode from 'qrcode.react';
 import { useNavigate } from 'react-router';
 
-import { Button } from '../../shared-components/Button';
+import { useIPV4Address } from '../../global-stores/useIPV4Address';
 import { Container } from '../../shared-components/Container';
 import { Input } from '../../shared-components/Input';
 import { Navbar } from '../../shared-components/Navbar';
@@ -10,6 +10,7 @@ import { HasNetwork } from '../network';
 
 export const QRCodePage = () => {
   const navigate = useNavigate();
+  const address = useIPV4Address((state) => state.address);
 
   return (
     <HasNetwork>
@@ -25,7 +26,7 @@ export const QRCodePage = () => {
             <div className="flex flex-col gap-5">
               <div className="text-center">
                 <div className="inline-block rounded-lg border-4 border-gray-200 p-2">
-                  <QRCode value="http://192.168.43.116:8082" size={200} />
+                  <QRCode value={`http://${address}:8082`} size={200} />
                 </div>
               </div>
 
@@ -40,7 +41,7 @@ export const QRCodePage = () => {
                 </Typography>
 
                 <Input
-                  value="http://192.168.43.116:8082"
+                  value={`http://${address}:8082`}
                   className="text-center"
                   readOnly
                 />

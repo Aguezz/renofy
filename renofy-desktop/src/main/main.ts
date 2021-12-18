@@ -12,10 +12,19 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import bodyParser from 'body-parser';
-import { app, BrowserWindow, nativeImage, Notification, shell } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  nativeImage,
+  Notification,
+  shell,
+} from 'electron';
 import express from 'express';
+import ip from 'ip';
 import path from 'path';
 
+import { GET_IPV4_ADDRESS } from '../shared-modules/events';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -139,3 +148,7 @@ app
     });
   })
   .catch(console.log);
+
+ipcMain.on(GET_IPV4_ADDRESS, (e) => {
+  e.returnValue = ip.address();
+});

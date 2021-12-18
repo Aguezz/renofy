@@ -1,23 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron');
+const { GET_IPV4_ADDRESS } = require('../shared-modules/events');
 
 contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer: {
-    myPing() {
-      ipcRenderer.send('ipc-example', 'ping');
-    },
-    on(channel, func) {
-      const validChannels = ['ipc-example'];
-      if (validChannels.includes(channel)) {
-        // Deliberately strip event as it includes `sender`
-        ipcRenderer.on(channel, (event, ...args) => func(...args));
-      }
-    },
-    once(channel, func) {
-      const validChannels = ['ipc-example'];
-      if (validChannels.includes(channel)) {
-        // Deliberately strip event as it includes `sender`
-        ipcRenderer.once(channel, (event, ...args) => func(...args));
-      }
+  store: {
+    getIPV4Address: () => {
+      return ipcRenderer.sendSync(GET_IPV4_ADDRESS);
     },
   },
+  ipcRenderer,
 });

@@ -7,6 +7,17 @@ import {
 
 import { routes } from './routes';
 
+declare global {
+  interface Window {
+    electron: {
+      store: {
+        getIPV4Address: () => string;
+      };
+      ipcRenderer: Electron.IpcRenderer;
+    };
+  }
+}
+
 export default function App() {
   return (
     <Router>
