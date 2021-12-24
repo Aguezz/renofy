@@ -12,6 +12,10 @@ declare global {
     electron: {
       store: {
         getIPV4Address: () => string;
+        getServerPort: () => string;
+        setServerPort: (serverPort: string) => void;
+        getAcceptBehavior: () => 'auto' | 'manual';
+        setAcceptBehavior: (acceptBehavior: 'auto' | 'manual') => void;
       };
       ipcRenderer: Electron.IpcRenderer;
     };

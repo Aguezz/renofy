@@ -65,6 +65,7 @@ export const Button = React.forwardRef<
       onClick,
       loading,
       children,
+      disabled,
       ...props
     },
     ref
@@ -78,15 +79,18 @@ export const Button = React.forwardRef<
         type={to !== null ? type || 'submit' : 'button'}
         className={clsx(
           'relative rounded-lg font-semibold transition-colors duration-150 tracking-wide',
+          // eslint-disable-next-line no-nested-ternary
           loading
             ? 'bg-gray-200 text-gray-400'
             : variantColorClasses[variant || 'text'][color || 'primary'],
           sizeClasses[size || 'md'],
           block && 'block w-full',
+          disabled && 'cursor-not-allowed',
           className
         )}
         {...props}
         onClick={to ? () => navigate(to) : onClick}
+        disabled={disabled || loading}
       >
         {children}
         {loading && (

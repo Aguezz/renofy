@@ -1,5 +1,4 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
-
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -20,11 +19,19 @@ import {
   Notification,
   shell,
 } from 'electron';
+import Store from 'electron-store';
 import express from 'express';
 import ip from 'ip';
 import path from 'path';
 
-import { GET_IPV4_ADDRESS } from '../shared-modules/events';
+import * as defaultValues from '../shared/defaultValues';
+import {
+  GET_IPV4_ADDRESS,
+  STORE_GET_ACCEPT_BEHAVIOR,
+  STORE_GET_SERVER_PORT,
+  STORE_SET_ACCEPT_BEHAVIOR,
+  STORE_SET_SERVER_PORT,
+} from '../shared/events';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -149,6 +156,32 @@ app
   })
   .catch(console.log);
 
+const store = new Store({
+  defaults: {
+    serverPort: defaultValues.DEFAULT_SERVER_PORT,
+    acceptBehavior: defaultValues.DEFAULT_ACCEPT_BEHAVIOR,
+  },
+});
+
 ipcMain.on(GET_IPV4_ADDRESS, (e) => {
   e.returnValue = ip.address();
 });
+
+ipcMain.on(STORE_GET_SERVER_PORT, (e) => {
+  e.returnValue = store.get('serverPort');
+});
+
+ipcMain.on(STORE_GET_ACCEPT_BEHAVIOR, (e) => {
+  e.returnValue = store.get('acceptBehavior');
+});
+
+ipcMain.on(STORE_SET_SERVER_PORT, (_, serverPort: string) => {
+  store.set('serverPort', serverPort);
+});
+
+ipcMain.on(
+  STORE_SET_ACCEPT_BEHAVIOR,
+  (_, acceptBehavior: 'auto' | 'manual') => {
+    store.set('acceptBehavior', acceptBehavior);
+  }
+);
