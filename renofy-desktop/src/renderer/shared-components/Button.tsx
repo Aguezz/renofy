@@ -43,6 +43,31 @@ const variantColorClasses: {
   },
 };
 
+const variantDisabledColorClasses: {
+  [V in Exclude<ButtonVariant, undefined>]: {
+    [C in Exclude<ButtonColor, undefined>]: string;
+  };
+} = {
+  contained: {
+    primary: 'text-white bg-blue-200 hover:bg-blue-300',
+    secondary: 'text-gray-400 bg-gray-200 hover:bg-gray-300',
+    error: 'text-white bg-red-200 hover:bg-red-300',
+  },
+  outlined: {
+    primary:
+      'text-blue-300 border border-blue-300 focus:shadow-outline hover:bg-gray-100 hover:text-blue-400',
+    secondary:
+      'text-gray-300 border border-gray-300 focus:shadow-outline hover:bg-gray-100 hover:text-gray-400',
+    error:
+      'text-red-300 border border-red-300 focus:shadow-outline hover:bg-gray-100 hover:text-red-400',
+  },
+  text: {
+    primary: 'text-blue-300 hover:bg-gray-100 hover:text-blue-400',
+    secondary: 'text-gray-300 hover:bg-gray-100 hover:text-gray-400',
+    error: 'text-red-300 hover:bg-gray-100 hover:text-red-400',
+  },
+};
+
 const sizeClasses: { [S in Exclude<ButtonSize, undefined>]: string } = {
   sm: 'px-3 py-1.5 text-sm',
   md: 'px-5 py-2 text-base',
@@ -82,6 +107,8 @@ export const Button = React.forwardRef<
           // eslint-disable-next-line no-nested-ternary
           loading
             ? 'bg-gray-200 text-gray-400'
+            : disabled
+            ? variantDisabledColorClasses[variant || 'text'][color || 'primary']
             : variantColorClasses[variant || 'text'][color || 'primary'],
           sizeClasses[size || 'md'],
           block && 'block w-full',
