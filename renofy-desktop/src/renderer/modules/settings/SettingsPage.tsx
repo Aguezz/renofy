@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useSettings } from '../../global-stores/useSettings';
@@ -8,6 +8,7 @@ import { Container } from '../../shared-components/Container';
 import { Input } from '../../shared-components/Input';
 import { Navbar } from '../../shared-components/Navbar';
 import { Select } from '../../shared-components/Select';
+import { AlertContext } from '../../shared-context/alert';
 import { HasNetwork } from '../network';
 
 const options = [
@@ -17,6 +18,8 @@ const options = [
 
 const SettingsForm = () => {
   const navigate = useNavigate();
+  const alert = useContext(AlertContext);
+
   const {
     storedAcceptBehavior,
     storedServerPort,
@@ -42,6 +45,7 @@ const SettingsForm = () => {
     if (acceptBehavior && serverPort) {
       storeAcceptBehavior(acceptBehavior);
       storeServerPort(serverPort);
+      alert.show({ title: 'Settings saved successfully', color: 'success' });
     }
   };
 
@@ -52,6 +56,7 @@ const SettingsForm = () => {
 
   const handleReset = () => {
     reset();
+    alert.show({ title: 'Settings reset successfully', color: 'success' });
   };
 
   useEffect(() => {
